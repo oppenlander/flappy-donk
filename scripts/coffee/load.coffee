@@ -23,7 +23,6 @@ class Load extends BaseState
     @game.load.image('gerter_tower_320_top', 'assets/images/gerter_tower_320_top.png')
     @game.load.image('explosion', 'assets/images/explosion.png')
     @game.load.spritesheet('mute', 'assets/images/mute.png', 28, 18)
-    @game.load.image('background', 'assets/images/background.png')
     @game.load.image('bg', 'assets/images/bg.png')
 
     # Load Sounds
