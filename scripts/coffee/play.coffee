@@ -226,6 +226,8 @@ class Play
               towerPair.pastPlayer = true
               @game.score += 1
               @scoreboard.setText(''+@game.score)
+              if @game.soundOn
+                @game.add.audio('passgate').play('', 0, .1)
 
     else # Player is dead
       @player.body.rotation -= 2
