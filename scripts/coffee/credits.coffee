@@ -35,6 +35,11 @@ class Credits extends BaseState
     menuLabel = @game.add.text(0, @game.world.height-58, 'Menu/Character Select: M', {font: '16px VT323', fill: '#fff'})
     menuLabel.x = @game.world.width - (menuLabel._width + 10)
 
+    # Create ledge gerters
+    for i in [0..(Math.ceil(@game.world.width/(3*32)-1))]
+      @game.add.sprite(i*32, @player.y + 40, 'gerter')
+    @player.bringToTop()
+
     @game.input.keyboard.callbackContext = @
     @game.input.keyboard.onDownCallback = @onKeyDown
     @game.input.keyboard.onUpCallback = @onKeyUp

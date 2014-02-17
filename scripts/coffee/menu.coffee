@@ -33,9 +33,16 @@ class Menu extends BaseState
 
     startLabel = @game.add.text(10, @game.world.height-74, 'Start: SPACE', {font: '32px VT323', fill: '#fff'})
 
-    for i in [0..(Math.ceil @game.world.width/32)]
+    # Create edge gerters
+    for i in [0..(Math.ceil(@game.world.width/32))]
       @game.add.sprite(i*32, @game.world.height-32, 'gerter')
       @game.add.sprite(i*32, 0, 'gerter')
+
+    # Create ledge gerters
+    for i in [0..(Math.ceil(@game.world.width/(3*32)-1))]
+      @game.add.sprite(i*32, @player.y + 40, 'gerter')
+    @player.bringToTop()
+
 
     @game.input.keyboard.callbackContext = @
     @game.input.keyboard.onDownCallback = @onKeyDown

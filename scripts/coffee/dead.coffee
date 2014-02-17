@@ -17,10 +17,10 @@ class Dead
     responseLabel2.x = @game.world.width/2 - responseLabel2._width/2
 
     # Create labels
-    highscoreLabel = @game.add.text(0, @game.world.height-158, 'Highscore: '+@game.highscore, {font: '48px VT323', fill: '#fff'})
+    highscoreLabel = @game.add.text(0, @game.world.height-190, 'Highscore: '+@game.highscore, {font: '64px VT323', fill: '#fff'})
     highscoreLabel.x = @game.world.width/2 - highscoreLabel._width/2
 
-    scoreLabel = @game.add.text(0, @game.world.height-100, 'Score: '+@game.score, {font: '32px VT323', fill: '#fff'})
+    scoreLabel = @game.add.text(0, @game.world.height-116, 'Score: '+@game.score, {font: '48px VT323', fill: '#fff'})
     scoreLabel.x = @game.world.width/2 - scoreLabel._width/2
 
     restartLabel = @game.add.text(10, @game.world.height-58, 'Restart: SPACE', {font: '16px VT323', fill: '#fff'})
@@ -41,7 +41,12 @@ class Dead
     @game.input.keyboard.onUpCallback = @onKeyUp
 
     @player = @game.add.sprite(@game.world.width/4, @game.world.height/2, 'donkey')
-    #TODO: add platform and animate off it for the game
+
+    # Create ledge gerters
+    for i in [0..(Math.ceil(@game.world.width/(3*32)-1))]
+      @game.add.sprite(i*32, @player.y + 40, 'gerter')
+    @player.bringToTop()
+
     @elapsedTime = 0
 
   onKeyDown: (event) ->
