@@ -165,6 +165,8 @@ class Play
         @explosion = @game.add.sprite(@player.x+@player.body.width/2, @player.y+@player.body.height/2, 'explosion')
         @explosion.elapsed = 0
         @explosion.anchor.setTo(.5, .5)
+        if @game.soundOn
+          @game.add.audio('explosion').play('', 0, .05)
 
         # Update player to death
         @player.body.velocity.x = 0

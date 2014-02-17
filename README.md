@@ -10,4 +10,6 @@ Project based on the excellent Phaser/Coffeescript boilerplate, [gulp-phaser](ht
 
 Copyright (c) 2014  [Andrew Oppenlander](http://oppenlander.co). See MIT-LICENSE for further details.
 
-Music under [Creative Commons 3.0 Unported](http://creativecommons.org/licenses/by/3.0/) license by [Rocco Wouters](www.soundcloud.com/roccow).
+Music and explosion sfx under [Creative Commons 3.0 Unported](http://creativecommons.org/licenses/by/3.0/) license by [Rocco Wouters](www.soundcloud.com/roccow) and [SoundBible.com](http://soundbible.com/1547-M1-Garand-Single.html), respectively.
+
+Explosion sound effect
