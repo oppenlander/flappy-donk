@@ -30,7 +30,7 @@ class Load extends BaseState
     @game.load.image('background', 'assets/images/background.png')
 
     # Load Sounds
-    @game.load.audio('braadslee', 'assets/sounds/braadslee.mp3', true)
+    @game.load.audio('braadslee', 'assets/sounds/braadslee.ogg', true)
 
   create: ->
     @game.state.start('Menu')
