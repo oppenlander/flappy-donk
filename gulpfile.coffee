@@ -38,7 +38,7 @@ gulp.task 'scripts', ->
     .pipe(gulp.dest 'assets/')
     .pipe(refresh server)
 
-  gulp.src('scripts/coffee/app.coffee', { read: false })
+  gulp.src('scripts/coffee/game.coffee', { read: false })
     .pipe(browserify(transform: ['coffeeify'], extensions: ['.coffee']))
     .pipe(concat 'scripts.js')
     .pipe(gulp.dest 'assets/')
@@ -60,11 +60,15 @@ gulp.task 'images', ->
         .pipe(imagemin())
         .pipe(gulp.dest('assets/images/'))
 
+gulp.task 'sounds', ->
+  gulp.src('resources/sounds/**')
+    .pipe(gulp.dest('assets/sounds/'))
+
 gulp.task 'watch', ->
   gulp.watch 'scripts/coffee/**', ['scripts']
   gulp.watch 'styles/scss/**', ['styles']
   gulp.watch 'resources/images/**', ['images']
+  gulp.watch 'resources/sounds/**', ['sounds']
   gulp.watch '*.html', ['html']
 
-gulp.task 'default', ['webserver', 'livereload', 'scripts', 'styles', 'images', 'watch']
-
+gulp.task 'default', ['webserver', 'livereload', 'scripts', 'styles', 'images', 'sounds', 'watch']

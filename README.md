@@ -1,50 +1,11 @@
-# gulpjs-phaser
+# Flappy Donk
 
-An awesome combination. Develop games faster, with less friction with
-tooling.
+A class based (eventually) Flappy Bird clone and realistic barrel jumping simulator.
 
+Inspired by [Flappy Jam](http://itch.io/jam/flappyjam).
 
-* Phaser game engine
-* Gulp.js for blazing-fast, maintainable builds
-* Static server and Live-Reload for faster turnaround times
-* Mini platformer from the phaser tutorial set up
-* Coffeescript for sane, succint code and build
-* Sass for awesome style
-
-
-## Getting started
-
-You need to have [node.js](http://nodejs.org/) installed on your machine.
-
-
-1. Install the [Chrome live-reload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) extension
-
-2. Set up your project:
-
-  ```
-  $ git clone git@github.com:jondot/gulpjs-phaser.git && cd gulpjs-phaser
-  $ npm install -g gulp && npm install
-  $ ./build
-  $ open http://localhost:3000
-  ```
-
-3. Edit your code and watch everything update automagically.
-
-
-# Contributing
-
-Fork, implement, add tests, pull request, get my everlasting thanks and a respectable place here :).
-
-## Thanks
-
-* Build inspired by [this post](http://filmic.eu/blog/build-a-web-project-using-gulpjs/)
-
+Project based on the excellent Phaser/Coffeescript boilerplate, [gulp-phaser](https://github.com/jondot/gulpjs-phaser) by [Dotan Nahum](http://gplus.to/dotan).
 
 # Copyright
 
-Copyright (c) 2014 [Dotan Nahum](http://gplus.to/dotan) [@jondot](http://twitter.com/jondot). See MIT-LICENSE for further details.
-
-
-
-
-
+Copyright (c) 2014  [Andrew Oppenlander](http://oppenlander.co). See MIT-LICENSE for further details.
