@@ -6,7 +6,7 @@ class Menu extends BaseState
     @game.add.sprite(0, 0, 'background')
 
     if not @game.backgroundMusic
-      @game.backgroundMusic = @game.add.audio('reflecs')
+      @game.backgroundMusic = @game.add.audio('braadslee')
       @game.backgroundMusic.play('', 0, 1, true)
 
     @soundToggle = @game.add.button(@game.world.width-38, 42, 'mute', @toggleSound, @)
@@ -32,6 +32,8 @@ class Menu extends BaseState
     descLabel.x = @game.world.width/2 - descLabel._width/2
 
     startLabel = @game.add.text(10, @game.world.height-74, 'Start: SPACE', {font: '32px VT323', fill: '#fff'})
+
+    creditsLabel = @game.add.text(10, 32, 'Credits: C', {font: '16px VT323', fill: '#fff'})
 
     for i in [0..(Math.ceil @game.world.width/32)]
       @game.add.sprite(i*32, @game.world.height-32, 'gerter')
@@ -64,6 +66,9 @@ class Menu extends BaseState
   onKeyDown: (event) ->
     if event.keyCode == Phaser.Keyboard.SPACEBAR
       @game.state.start('Play')
+    else if event.keyCode == Phaser.Keyboard.C
+      console.log('TODO: make credits page')
+      #game.state.start('Credits')
 
   onKeyUp: (event) ->
 

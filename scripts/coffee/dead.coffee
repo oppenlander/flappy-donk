@@ -19,11 +19,16 @@ class Dead
     # Create labels
     highscoreLabel = @game.add.text(0, @game.world.height-158, 'Highscore: '+@game.highscore, {font: '48px VT323', fill: '#fff'})
     highscoreLabel.x = @game.world.width/2 - highscoreLabel._width/2
+
     scoreLabel = @game.add.text(0, @game.world.height-100, 'Score: '+@game.score, {font: '32px VT323', fill: '#fff'})
     scoreLabel.x = @game.world.width/2 - scoreLabel._width/2
+
     restartLabel = @game.add.text(10, @game.world.height-58, 'Restart: SPACE', {font: '16px VT323', fill: '#fff'})
+
     menuLabel = @game.add.text(0, @game.world.height-58, 'Menu/Character Select: M', {font: '16px VT323', fill: '#fff'})
     menuLabel.x = @game.world.width - (menuLabel._width + 10)
+
+    creditsLabel = @game.add.text(10, 32, 'Credits: C', {font: '16px VT323', fill: '#fff'})
 
     # Create edges
     for i in [0..(Math.ceil @game.world.width/32)]
@@ -43,6 +48,9 @@ class Dead
       @game.state.start('Play')
     else if event.keyCode == Phaser.Keyboard.M
       @game.state.start('Menu')
+    else if event.keyCode == Phaser.Keyboard.C
+      console.log('TODO: make credits page')
+      #game.state.start('Credits')
 
   onKeyUp: (event) ->
 
