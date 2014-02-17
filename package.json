@@ -1,9 +1,9 @@
 {
-  "name": "gulpjs-phaser",
+  "name": "flappy-donk",
   "author": {
-    "name": "Dotan Nahum",
-    "email": "jondotan@gmail.com",
-    "url": "http://github.com/jondot/gulpjs-phaser"
+    "name": "Andrew Oppenlander",
+    "email": "andrew.oppenlander@gmail.com",
+    "url": "http://github.com/oppenlander/flappy-donk"
   },
   "version": "0.0.1",
   "description": "",
