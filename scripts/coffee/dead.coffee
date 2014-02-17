@@ -51,6 +51,8 @@ class Dead
       @game.state.start('Menu')
     else if event.keyCode == Phaser.Keyboard.C
       @game.state.start('Credits')
+    else if event.keyCode == Phaser.Keyboard.P
+      @toggleSound()
 
   onKeyUp: (event) ->
 

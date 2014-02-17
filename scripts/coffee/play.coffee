@@ -22,28 +22,28 @@ class Play
     # Create Towers
     @towers = @game.add.group()
 
-    topTower0 = @towers.create(@game.world.width, @gerterSize-10, 'gerter_tower_220_top')
+    topTower0 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_210_top')
     topTower0.towerIdx = 0
     topTower0.body.immovable = true
-    botTower0 = @towers.create(@game.world.width, @game.world.height-242, 'gerter_tower_220')
+    botTower0 = @towers.create(@game.world.width, @game.world.height-242, 'gerter_tower_210')
     botTower0.body.immovable = true
 
-    topTower1 = @towers.create(@game.world.width, @gerterSize-10, 'gerter_tower_220_top')
+    topTower1 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_210_top')
     topTower1.towerIdx = 1
     topTower1.body.immovable = true
-    botTower1 = @towers.create(@game.world.width, @game.world.height-242, 'gerter_tower_220')
+    botTower1 = @towers.create(@game.world.width, @game.world.height-242, 'gerter_tower_210')
     botTower1.body.immovable = true
 
-    topTower2 = @towers.create(@game.world.width, @gerterSize-10, 'gerter_tower_330_top')
+    topTower2 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_320_top')
     topTower2.towerIdx = 2
     topTower2.body.immovable = true
-    botTower2 = @towers.create(@game.world.width, @game.world.height-132, 'gerter_tower_110')
+    botTower2 = @towers.create(@game.world.width, @game.world.height-132, 'gerter_tower_100')
     botTower2.body.immovable = true
 
-    topTower3 = @towers.create(@game.world.width, @gerterSize-10, 'gerter_tower_110_top')
+    topTower3 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_100_top')
     topTower3.towerIdx = 3
     topTower3.body.immovable = true
-    botTower3 = @towers.create(@game.world.width, @game.world.height-352, 'gerter_tower_330')
+    botTower3 = @towers.create(@game.world.width, @game.world.height-352, 'gerter_tower_320')
     botTower3.body.immovable = true
 
     @towersPairs = [
@@ -138,6 +138,8 @@ class Play
   onKeyDown: (event) ->
     if event.keyCode == Phaser.Keyboard.SPACEBAR
       @playerJump()
+    else if event.keyCode == Phaser.Keyboard.P
+      @toggleSound()
 
   toggleSound: ->
     if @game.soundOn

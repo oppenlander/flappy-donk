@@ -64,6 +64,8 @@ class Menu extends BaseState
       @game.state.start('Play')
     else if event.keyCode == Phaser.Keyboard.C
       @game.state.start('Credits')
+    else if event.keyCode == Phaser.Keyboard.P
+      @toggleSound()
 
   onKeyUp: (event) ->
 
