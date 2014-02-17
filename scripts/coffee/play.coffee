@@ -1,7 +1,7 @@
 class Play
 
   create: ->
-    @game.add.sprite(0, 0, 'background')
+    @game.add.sprite(0, 0, 'bg')
 
     # Gerter Tile size/speed constants
     @gerterSize = 32
@@ -155,14 +155,25 @@ class Play
       @game.physics.collide(@player, @gerters)
       @game.physics.collide(@player, @towers)
 
+      # Check if player should die
       if @player.body.touching.up or
           @player.body.touching.right or
           @player.body.touching.down or
           @player.body.touching.left
+
+        # Create explosion
+        @explosion = @game.add.sprite(@player.x+@player.body.width/2, @player.y+@player.body.height/2, 'explosion')
+        @explosion.elapsed = 0
+        @explosion.anchor.setTo(.5, .5)
+
+        # Update player to death
         @player.body.velocity.x = 0
+        @player.body.velocity.y = 0
         @player.isDead = true
         @player.bringToTop()
-        @player.body.gravity.y = 1000
+        @player.body.gravity.y = 1250
+
+        # Let player overlap these as they fall
         @gerters.setAll 'body.checkCollision.up', false
         @gerters.setAll 'body.checkCollision.right', false
         @gerters.setAll 'body.checkCollision.down', false
@@ -174,53 +185,59 @@ class Play
         @towers.setAll 'body.checkCollision.left', false
         @towers.setAll 'body.checkCollision.any', false
 
-      # velocity will be NaN after a collide
-      if isNaN @player.body.velocity.x
-        @player.body.velocity.x = 0
-      if isNaN @player.body.velocity.y
-        @player.body.velocity.y = 0
+      else
+        # Check if a new tower needs generated
+        if @needTower
+          @needTower = false
+          pair = @getRandomDeadTowersPair()
+          pair.alive = true
+          pair.top.x += 300
+          pair.bot.x += 300
+          @towersPairs[pair.top.towerIdx] = pair
 
-      if @needTower
-        @needTower = false
-        pair = @getRandomDeadTowersPair()
-        pair.alive = true
-        pair.top.x += 300
-        pair.bot.x += 300
-        @towersPairs[pair.top.towerIdx] = pair
+        # Update Gerter position
+        for i in [0..@gertersArray.length-1]
+          gerter = @gertersArray[i]
+          if gerter.x + gerter.width < 0
+            gerter.reset(@gerterMovePoint, gerter.y)
+          gerter.x -= @gerterSpeed
 
-      # Update Gerter position
-      for i in [0..@gertersArray.length-1]
-        gerter = @gertersArray[i]
-        if gerter.x + gerter.width < 0
-          gerter.reset(@gerterMovePoint, gerter.y)
-        gerter.x -= @gerterSpeed
+        # Update Tower position
+        for i in [0..@towersPairs.length-1]
+          towerPair = @towersPairs[i]
+          if towerPair.alive
+            towerPair.top.x -= @gerterSpeed
+            towerPair.bot.x -= @gerterSpeed
+            rightSidePos = towerPair.top.x + towerPair.top.width
+            if rightSidePos < 0
+              # Reset tower if its past the screen
+              towerPair.top.reset(@game.world.width+20, towerPair.top.y)
+              towerPair.bot.reset(@game.world.width+20, towerPair.bot.y)
+              towerPair.alive = false
+              towerPair.pastPlayer = false
+              @needTower = true
+            else if not towerPair.pastPlayer and
+                rightSidePos < @player.x
+              # Update score if the tower passes the player
+              towerPair.pastPlayer = true
+              @game.score += 1
+              @scoreboard.setText(''+@game.score)
 
-      # Update Tower position
-      for i in [0..@towersPairs.length-1]
-        towerPair = @towersPairs[i]
-        if towerPair.alive
-          towerPair.top.x -= @gerterSpeed
-          towerPair.bot.x -= @gerterSpeed
-          rightSidePos = towerPair.top.x + towerPair.top.width
-          if rightSidePos < 0
-            # Reset tower if its past the screen
-            towerPair.top.reset(@game.world.width+20, towerPair.top.y)
-            towerPair.bot.reset(@game.world.width+20, towerPair.bot.y)
-            towerPair.alive = false
-            towerPair.pastPlayer = false
-            @needTower = true
-          else if not towerPair.pastPlayer and
-              rightSidePos < @player.x
-            # Update score if the tower passes the player
-            towerPair.pastPlayer = true
-            @game.score += 1
-            @scoreboard.setText(''+@game.score)
+    else # Player is dead
+      @player.body.rotation -= 2
 
-    else if @player.y > @game.world.height
-      if @game.score > @game.highscore
-        @game.highscore = @game.score
-        @game.newRecord = true
-      @game.state.start 'Dead'
+      if @player.y > @game.world.height
+        if @game.score > @game.highscore
+          # Switch to Dead state
+          @game.highscore = @game.score
+          @game.newRecord = true
+        @game.state.start 'Dead'
+
+    if @explosion?
+      @explosion.elapsed += @game.time.elapsed
+      if @explosion.elapsed > 100
+        @explosion.destroy()
+        @explosion = null
 
 
 module.exports = Play

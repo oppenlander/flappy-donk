@@ -3,7 +3,7 @@ BaseState = require './basestate'
 class Menu extends BaseState
 
   create: ->
-    @game.add.sprite(0, 0, 'background')
+    @game.add.sprite(0, 0, 'bg')
 
     if not @game.backgroundMusic
       @game.backgroundMusic = @game.add.audio('braadslee')

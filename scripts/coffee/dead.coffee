@@ -1,7 +1,7 @@
 class Dead
 
   create: ->
-    @game.add.sprite(0, 0, 'background')
+    @game.add.sprite(0, 0, 'bg')
 
     @soundToggle = @game.add.button(@game.world.width-38, 42, 'mute', @toggleSound, @)
     if not @game.soundOn
