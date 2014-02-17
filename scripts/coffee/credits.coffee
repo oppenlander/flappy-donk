@@ -19,7 +19,7 @@ class Credits extends BaseState
 
     creatorLabel = @game.add.text(0, 48, 'Made by: Andrew O.', {font: '48px VT323', fill: '#fff'})
     creatorLabel.x = @game.world.width/2 - creatorLabel._width/2
-    creatorSubLabel = @game.add.text(0, 88, 'Twitter: Usagimaru57', {font: '32px VT323', fill: '#fff'})
+    creatorSubLabel = @game.add.text(0, 88, 'Twitter: usagimaru57', {font: '32px VT323', fill: '#fff'})
     creatorSubLabel.x = @game.world.width/2 - creatorSubLabel._width/2
     creatorSubSubLabel = @game.add.text(0, 118, 'GitHub: oppenlander', {font: '32px VT323', fill: '#fff'})
     creatorSubSubLabel.x = @game.world.width/2 - creatorSubSubLabel._width/2
