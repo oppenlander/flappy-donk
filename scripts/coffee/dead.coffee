@@ -28,7 +28,8 @@ class Dead
     menuLabel = @game.add.text(0, @game.world.height-58, 'Menu/Character Select: M', {font: '16px VT323', fill: '#fff'})
     menuLabel.x = @game.world.width - (menuLabel._width + 10)
 
-    creditsLabel = @game.add.text(10, 32, 'Credits: C', {font: '16px VT323', fill: '#fff'})
+    creditsLabel = @game.add.text(0, @game.world.height-78, 'Credits: C', {font: '16px VT323', fill: '#fff'})
+    creditsLabel.x = @game.world.width - (creditsLabel._width + 10)
 
     # Create edges
     for i in [0..(Math.ceil @game.world.width/32)]
@@ -49,8 +50,7 @@ class Dead
     else if event.keyCode == Phaser.Keyboard.M
       @game.state.start('Menu')
     else if event.keyCode == Phaser.Keyboard.C
-      console.log('TODO: make credits page')
-      #game.state.start('Credits')
+      @game.state.start('Credits')
 
   onKeyUp: (event) ->
 

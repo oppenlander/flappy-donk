@@ -166,7 +166,7 @@ class Play
         @explosion.elapsed = 0
         @explosion.anchor.setTo(.5, .5)
         if @game.soundOn
-          @game.add.audio('explosion').play('', 0, .05)
+          @game.add.audio('explosion').play('', 0, .1)
 
         # Update player to death
         @player.body.velocity.x = 0
