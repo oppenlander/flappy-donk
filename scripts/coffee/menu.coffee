@@ -22,7 +22,7 @@ class Menu extends BaseState
     donkLabel.x = @gw/2 - donkLabel._width/2
     descLabel = @game.add.text(0, 224, 'A realistic barrel jumping simulator', {font: '16px VT323', fill: '#fff'})
     descLabel.x = @gw/2 - descLabel._width/2
-    versionLabel = @game.add.text(0, 248, 'Patch v0.0.0.0.0.23.0.2', {font: '16px VT323', fill: '#fff'})
+    versionLabel = @game.add.text(0, 248, 'Patch v1.0.23.0.2896.1', {font: '16px VT323', fill: '#fff'})
     versionLabel.x = @gw/2 - versionLabel._width/2
     startLabel = @game.add.text(10, @gh-74, 'Start: SPACE', {font: '32px VT323', fill: '#fff'})
 
@@ -58,7 +58,7 @@ class Menu extends BaseState
     buttonSquier.x = @selectSquier.sprite.x - 32
     buttonSquier.y = @selectSquier.sprite.y - 32
     @selectSquier.sprite.bringToTop()
-    textSquier = @game.add.text(0, 0, 'Squier', {font: '16px VT323', fill: '#fff'})
+    textSquier = @game.add.text(0, 0, 'Squire', {font: '16px VT323', fill: '#fff'})
     textSquier.anchor.setTo(.5, .5)
     textSquier.x = @selectSquier.sprite.x
     textSquier.y = buttonSquier.y + 70
