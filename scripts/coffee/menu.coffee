@@ -30,6 +30,8 @@ class Menu extends BaseState
     donkLabel.x = @game.world.width/2 - donkLabel._width/2
     descLabel = @game.add.text(0, 224, 'A realistic barrel jumping simulator', {font: '16px VT323', fill: '#fff'})
     descLabel.x = @game.world.width/2 - descLabel._width/2
+    versionLabel = @game.add.text(0, 248, 'Patch v0.0.0.0.0.23.0.1', {font: '16px VT323', fill: '#fff'})
+    versionLabel.x = @game.world.width/2 - versionLabel._width/2
 
     startLabel = @game.add.text(10, @game.world.height-74, 'Start: SPACE', {font: '32px VT323', fill: '#fff'})
 

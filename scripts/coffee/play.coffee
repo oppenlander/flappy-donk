@@ -119,6 +119,8 @@ class Play
           @player.body.velocity.y = -350
         else
           @player.body.velocity.y -= 400
+        if @game.soundOn
+          @game.add.audio('jump').play('', 0, .05)
       @player.frame = 1
 
   endJump: ->

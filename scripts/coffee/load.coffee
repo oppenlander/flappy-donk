@@ -29,6 +29,7 @@ class Load extends BaseState
     @game.load.audio('braadslee', 'assets/sounds/braadslee.ogg', true)
     @game.load.audio('explosion', 'assets/sounds/explosion.ogg', true)
     @game.load.audio('passgate', 'assets/sounds/passgate.ogg', true)
+    @game.load.audio('jump', 'assets/sounds/jump.ogg', true)
 
   create: ->
     @game.state.start('Menu')
