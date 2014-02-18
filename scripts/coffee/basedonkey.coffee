@@ -13,7 +13,7 @@ class BaseDonkey
     @jumpAudio = @game.add.audio('jump')
     @explosionAudio = @game.add.audio('explosion')
 
-  play: ->
+  play: (gerters) ->
     @sprite.body.gravity.y = @gravity
     @playing = true
     @isDead = false

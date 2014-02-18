@@ -21,7 +21,7 @@ class Play extends BaseState
 
     # Create Player
     @player = new @game.donkSelection(@game)
-    @player.play()
+    @player.play(@towers)
 
     # Create score and move move sound toggle up
     @scoreboard = @game.add.text(10, @gerterSize, ''+@game.score, {font: '48px VT323', fill: '#fff'})
