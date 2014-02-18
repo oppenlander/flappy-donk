@@ -185,6 +185,8 @@ class Play
   onKeyUp: (event) ->
     if event.keyCode == Phaser.Keyboard.SPACEBAR
       @endJump()
+    else if event.keyCode == Phaser.Keyboard.R
+      @game.state.start('Play')
 
   onKeyDown: (event) ->
     if event.keyCode == Phaser.Keyboard.SPACEBAR
