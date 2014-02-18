@@ -1,89 +1,98 @@
-class Play
+BaseState = require('./basestate')
+
+class Play extends BaseState
 
   create: ->
-    @game.add.sprite(0, 0, 'bg')
+    super
 
-    # Gerter Tile size/speed constants
-    @gerterSize = 32
-    @gerterSpeed = 2
+    # How fast the world is moving
+    @speed = 2
+
+    # Where to move gerters to after they pass the screen
+    numEdgeTiles = Math.ceil(@gw / @gerterSize)
+    @gerterMovePoint = numEdgeTiles * @gerterSize - @speed
 
     # Reset score
     @game.score = 0
     @game.newRecord = false
 
-    #TODO: set up scene to animate donk in from the left, then let user play
-
+    # Preload towers
     @createTowers()
-    @createEdges()
-    @createPlayer()
-    @createDashboard()
+
+    # Create Player
+    @player = new @game.donkSelection(@game)
+    @player.play()
+
+    # Create score and move move sound toggle up
+    @scoreboard = @game.add.text(10, @gerterSize, ''+@game.score, {font: '48px VT323', fill: '#fff'})
+    @soundToggle.bringToTop()
 
   createTowers: ->
     # Create Towers
     @towers = @game.add.group()
 
     # Medium Towers
-    topTower0 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_210_top')
+    topTower0 = @towers.create(@gw, @gerterSize, 'gerter_tower_210_top')
     topTower0.body.immovable = true
-    botTower0 = @towers.create(@game.world.width, @game.world.height-242, 'gerter_tower_210')
+    botTower0 = @towers.create(@gw, @gh-242, 'gerter_tower_210')
     botTower0.body.immovable = true
 
-    topTower1 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_210_top')
+    topTower1 = @towers.create(@gw, @gerterSize, 'gerter_tower_210_top')
     topTower1.body.immovable = true
-    botTower1 = @towers.create(@game.world.width, @game.world.height-242, 'gerter_tower_210')
+    botTower1 = @towers.create(@gw, @gh-242, 'gerter_tower_210')
     botTower1.body.immovable = true
 
-    topTower2 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_210_top')
+    topTower2 = @towers.create(@gw, @gerterSize, 'gerter_tower_210_top')
     topTower2.body.immovable = true
-    botTower2 = @towers.create(@game.world.width, @game.world.height-242, 'gerter_tower_210')
+    botTower2 = @towers.create(@gw, @gh-242, 'gerter_tower_210')
     botTower2.body.immovable = true
 
     # Low Towers
-    topTower3 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_320_top')
+    topTower3 = @towers.create(@gw, @gerterSize, 'gerter_tower_320_top')
     topTower3.body.immovable = true
-    botTower3 = @towers.create(@game.world.width, @game.world.height-132, 'gerter_tower_100')
+    botTower3 = @towers.create(@gw, @gh-132, 'gerter_tower_100')
     botTower3.body.immovable = true
 
-    topTower4 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_320_top')
+    topTower4 = @towers.create(@gw, @gerterSize, 'gerter_tower_320_top')
     topTower4.body.immovable = true
-    botTower4 = @towers.create(@game.world.width, @game.world.height-132, 'gerter_tower_100')
+    botTower4 = @towers.create(@gw, @gh-132, 'gerter_tower_100')
     botTower4.body.immovable = true
 
-    topTower5 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_320_top')
+    topTower5 = @towers.create(@gw, @gerterSize, 'gerter_tower_320_top')
     topTower5.body.immovable = true
-    botTower5 = @towers.create(@game.world.width, @game.world.height-132, 'gerter_tower_100')
+    botTower5 = @towers.create(@gw, @gh-132, 'gerter_tower_100')
     botTower5.body.immovable = true
 
     # High Towers
-    topTower6 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_100_top')
+    topTower6 = @towers.create(@gw, @gerterSize, 'gerter_tower_100_top')
     topTower6.body.immovable = true
-    botTower6 = @towers.create(@game.world.width, @game.world.height-352, 'gerter_tower_320')
+    botTower6 = @towers.create(@gw, @gh-352, 'gerter_tower_320')
     botTower6.body.immovable = true
 
-    topTower7 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_100_top')
+    topTower7 = @towers.create(@gw, @gerterSize, 'gerter_tower_100_top')
     topTower7.body.immovable = true
-    botTower7 = @towers.create(@game.world.width, @game.world.height-352, 'gerter_tower_320')
+    botTower7 = @towers.create(@gw, @gh-352, 'gerter_tower_320')
     botTower7.body.immovable = true
 
-    topTower8 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_100_top')
+    topTower8 = @towers.create(@gw, @gerterSize, 'gerter_tower_100_top')
     topTower8.body.immovable = true
-    botTower8 = @towers.create(@game.world.width, @game.world.height-352, 'gerter_tower_320')
+    botTower8 = @towers.create(@gw, @gh-352, 'gerter_tower_320')
     botTower8.body.immovable = true
 
     # Fire Towers
-    topTower9 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_210_top')
+    topTower9 = @towers.create(@gw, @gerterSize, 'gerter_tower_210_top')
     topTower9.body.immovable = true
-    botTower9 = @towers.create(@game.world.width, @game.world.height-252, 'gerter_tower_fire_220')
+    botTower9 = @towers.create(@gw, @gh-252, 'gerter_tower_fire_220')
     botTower9.body.immovable = true
 
-    topTower10 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_320_top')
+    topTower10 = @towers.create(@gw, @gerterSize, 'gerter_tower_320_top')
     topTower10.body.immovable = true
-    botTower10 = @towers.create(@game.world.width, @game.world.height-142, 'gerter_tower_fire_110')
+    botTower10 = @towers.create(@gw, @gh-142, 'gerter_tower_fire_110')
     botTower10.body.immovable = true
 
-    topTower11 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_100_top')
+    topTower11 = @towers.create(@gw, @gerterSize, 'gerter_tower_100_top')
     topTower11.body.immovable = true
-    botTower11 = @towers.create(@game.world.width, @game.world.height-362, 'gerter_tower_fire_330')
+    botTower11 = @towers.create(@gw, @gh-362, 'gerter_tower_fire_330')
     botTower11.body.immovable = true
 
     @towersPairs = [
@@ -117,43 +126,6 @@ class Play
 
     @needTower = false
 
-  createPlayer: ->
-    # Create Player
-    @player = new @game.donkSelection(@game)
-    @player.play()
-
-    # Set up user input
-    if not @game.isMobile
-      @game.input.keyboard.callbackContext = @
-      @game.input.keyboard.onDownCallback = @onKeyDown
-      @game.input.keyboard.onUpCallback = @onKeyUp
-    else
-      @game.input.touch.callbackContext = @
-      @game.input.touch.touchStartCallback = @onTouchStart
-      @game.input.touch.touchEndCallback = @onTouchEnd
-      @game.input.touch.start()
-
-  createEdges: ->
-    # Create Ceiling/Floor tiels
-    @gerters = @game.add.group()
-    numEdgeTiles = Math.ceil(@game.world.width / @gerterSize)
-    @gerterMovePoint = numEdgeTiles * @gerterSize - @gerterSpeed
-    @gertersArray = []
-    for i in [0..numEdgeTiles]
-      floorTile = @gerters.create(i * @gerterSize, @game.world.height - @gerterSize, 'gerter')
-      floorTile.body.immovable = true
-      @gertersArray.push(floorTile)
-
-      ceilingTile = @gerters.create(i * @gerterSize, 0, 'gerter')
-      ceilingTile.body.immovable = true
-      @gertersArray.push(ceilingTile)
-
-  createDashboard: ->
-    @scoreboard = @game.add.text(10, 32, ''+@game.score, {font: '48px VT323', fill: '#fff'})
-    @soundToggle = @game.add.button(@game.world.width-38, 42, 'mute', @toggleSound, @)
-    if not @game.soundOn
-      @soundToggle.frame = 1
-
   getRandomDeadTowersPair: ->
     deadTowers = @towersPairs.filter((tower) -> not tower.alive)
     deadTowers[Math.floor(Math.random() * deadTowers.length)]
@@ -169,24 +141,19 @@ class Play
       @player.jumpEnd()
     else if event.keyCode == Phaser.Keyboard.R
       @game.state.start('Play')
+    else
+      super
 
   onKeyDown: (event) ->
     if event.keyCode == Phaser.Keyboard.SPACEBAR
       @player.jumpStart()
     else if event.keyCode == Phaser.Keyboard.P
       @toggleSound()
-
-  toggleSound: ->
-    if @game.soundOn
-      @game.soundOn = false
-      @soundToggle.frame = 1
-      @game.backgroundMusic.pause()
     else
-      @game.soundOn = true
-      @soundToggle.frame = 0
-      @game.backgroundMusic.resume()
+      super
 
   update: ->
+    super
     if not @player.isDead
       # Collide/collect against other entities
       @game.physics.collide(@player.sprite, @gerters)
@@ -198,19 +165,8 @@ class Play
           @player.sprite.body.touching.down or
           @player.sprite.body.touching.left
 
-        # Create explosion
-        @explosion = @game.add.sprite(@player.sprite.x+@player.sprite.body.width/2, @player.sprite.y+@player.sprite.body.height/2, 'explosion')
-        @explosion.elapsed = 0
-        @explosion.anchor.setTo(.5, .5)
-        if @game.soundOn
-          @game.add.audio('explosion').play('', 0, .1)
-
-        # Update player to death
-        @player.sprite.body.velocity.x = 0
-        @player.sprite.body.velocity.y = 0
-        @player.isDead = true
-        @player.sprite.bringToTop()
-        @player.sprite.body.gravity.y = 1250
+        # Kill player
+        @player.kill()
 
         # Let player overlap these as they fall
         @gerters.setAll 'body.checkCollision.up', false
@@ -238,19 +194,19 @@ class Play
           gerter = @gertersArray[i]
           if gerter.x + gerter.width < 0
             gerter.reset(@gerterMovePoint, gerter.y)
-          gerter.x -= @gerterSpeed
+          gerter.x -= @speed
 
         # Update Tower position
         for i in [0..@towersPairs.length-1]
           towerPair = @towersPairs[i]
           if towerPair.alive
-            towerPair.top.x -= @gerterSpeed
-            towerPair.bot.x -= @gerterSpeed
+            towerPair.top.x -= @speed
+            towerPair.bot.x -= @speed
             rightSidePos = towerPair.top.x + towerPair.top.width
             if rightSidePos < 0
               # Reset tower if its past the screen
-              towerPair.top.reset(@game.world.width+20, towerPair.top.y)
-              towerPair.bot.reset(@game.world.width+20, towerPair.bot.y)
+              towerPair.top.reset(@gw+20, towerPair.top.y)
+              towerPair.bot.reset(@gw+20, towerPair.bot.y)
               towerPair.alive = false
               towerPair.pastPlayer = false
               @needTower = true
@@ -263,21 +219,7 @@ class Play
               if @game.soundOn
                 @game.add.audio('passgate').play('', 0, .1)
 
-    else # Player is dead
-      @player.sprite.body.rotation -= 2
-
-      if @player.sprite.y > @game.world.height
-        if @game.score > @game.highscore
-          # Switch to Dead state
-          @game.highscore = @game.score
-          @game.newRecord = true
-        @game.state.start 'Dead'
-
-    if @explosion?
-      @explosion.elapsed += @game.time.elapsed
-      if @explosion.elapsed > 100
-        @explosion.destroy()
-        @explosion = null
-
+    # Update player
+    @player.update()
 
 module.exports = Play

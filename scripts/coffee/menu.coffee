@@ -5,26 +5,13 @@ Donkey = require('./donkey')
 class Menu extends BaseState
 
   create: ->
-    @game.add.sprite(0, 0, 'bg')
-
-    if not @game.backgroundMusic
-      @game.backgroundMusic = @game.add.audio('braadslee')
-      @game.backgroundMusic.play('', 0, 1, true)
-
-    @soundToggle = @game.add.button(@game.world.width-38, 42, 'mute', @toggleSound, @)
-    if not @game.soundOn?
-      @game.soundOn = true
-    else if not @game.soundOn
-      @soundToggle.frame = 1
+    super
 
     # Show Top score
     if not @game.highscore
       @game.highscore = 0
     highscoreLabel = @game.add.text(0, @game.world.height-74, 'Highscore: '+@game.highscore, {font: '32px VT323', fill: '#fff'})
     highscoreLabel.x = @game.world.width - (highscoreLabel._width + 10)
-
-    # Selection pane of a couple Donkeys
-    @createDonkSelection()
 
     flappyLabel = @game.add.text(0, 42, 'FLAPPY', {font: '96px VT323', fill: '#fff'})
     flappyLabel.x = @game.world.width/2 - flappyLabel._width/2
@@ -34,68 +21,18 @@ class Menu extends BaseState
     descLabel.x = @game.world.width/2 - descLabel._width/2
     versionLabel = @game.add.text(0, 248, 'Patch v0.0.0.0.0.23.0.1', {font: '16px VT323', fill: '#fff'})
     versionLabel.x = @game.world.width/2 - versionLabel._width/2
-
     startLabel = @game.add.text(10, @game.world.height-74, 'Start: SPACE', {font: '32px VT323', fill: '#fff'})
 
-    # Create edge gerters
-    for i in [0..(Math.ceil(@game.world.width/32))]
-      @game.add.sprite(i*32, @game.world.height-32, 'gerter')
-      @game.add.sprite(i*32, 0, 'gerter')
-
-    # Create ledge gerters
-    for i in [0..(Math.ceil(@game.world.width/(3*32)-1))]
-      @game.add.sprite(i*32, @player.sprite.y + 40, 'gerter')
-    @player.sprite.bringToTop()
-
-    if not @game.isMobile
-      @game.input.keyboard.callbackContext = @
-      @game.input.keyboard.onDownCallback = @onKeyDown
-      @game.input.keyboard.onUpCallback = @onKeyUp
-    else
-      @game.input.touch.callbackContext = @
-      @game.input.touch.touchStartCallback = @onTouchStart
-      @game.input.touch.touchEndCallback = @onTouchEnd
-      @game.input.touch.start()
-
-    @elapsedTime = 0
+    @createIdle()
+    @createDonkSelection()
 
   createDonkSelection: ->
-    console.log('Create the Donk selection')
-    if not @game.donkSelection?
-      @game.donkSelection = Donkey
-    @player = new @game.donkSelection(@game)
+    console.log('Donk selection!')
     #TODO: create donk selection
     #TODO: add platofrm and animate off it for the game
 
-  toggleSound: ->
-    if @game.soundOn
-      @game.soundOn = false
-      @soundToggle.frame = 1
-      @game.backgroundMusic.pause()
-    else
-      @game.soundOn = true
-      @soundToggle.frame = 0
-      @game.backgroundMusic.resume()
-
-  onKeyDown: (event) ->
-    if event.keyCode == Phaser.Keyboard.SPACEBAR
-      @game.state.start('Play')
-    else if event.keyCode == Phaser.Keyboard.C
-      @game.state.start('Credits')
-    else if event.keyCode == Phaser.Keyboard.P
-      @toggleSound()
-
-  onKeyUp: (event) ->
-
-  onTouchStart: (event) ->
-    @game.state.start('Play')
-
-  onTouchEnd: (event) ->
-
   update: ->
+    super
     @player.idle()
-
-    if not @game.soundOn
-      @game.backgroundMusic.pause()
 
 module.exports = Menu
