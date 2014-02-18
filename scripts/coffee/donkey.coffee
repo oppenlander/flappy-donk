@@ -7,10 +7,9 @@ class Donkey extends BaseDonkey
 
     #TODO: adjust hit box
 
-    @gravity = 500
-    @maxVel = -350
-    @addVel = -400
-    @minVel = -200
-    @limitVel = 50
+    @gravity = 600
+    @maxVelocity = -350
+    @jumpVel = -400
+    @canJumpVel = -200
 
 module.exports = Donkey

@@ -6,26 +6,26 @@ class BaseDonkey
 
     # Default values
     @gravity = 500
-    @maxVel = -350
-    @addVel = -400
-    @minVel = -200
-    @limitVel = 50
+    @gravity = 500
+    @maxVelocity = -350
+    @jumpVel = -400
+    @canJumpVel = -200
+
     @jumpAudio = @game.add.audio('jump')
     @explosionAudio = @game.add.audio('explosion')
 
-  play: (towersPairs) ->
+  play: (state) ->
     @sprite.body.gravity.y = @gravity
     @playing = true
     @isDead = false
 
   jumpStart: ->
     if @playing and not @isDead
-      if @sprite.body.velocity.y > @minVel
-        # Ensure the player doesn't jump too fast
-        if @sprite.body.velocity.y < @limitVel
-          @sprite.body.velocity.y = @maxVel
-        else
-          @sprite.body.velocity.y += @addVel
+      if @sprite.body.velocity.y > @canJumpVel
+        @sprite.body.velocity.y += @jumpVel
+        if @sprite.body.velocity < @maxVelocity
+          @sprite.body.velocity.y = @maxVelocity
+
         if @game.soundOn
           @jumpAudio.play('', 0, .05)
       @sprite.frame = 1

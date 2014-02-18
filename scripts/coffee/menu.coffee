@@ -120,9 +120,9 @@ class Menu extends BaseState
 
   onKeyDown: (event) ->
     if event.keyCode == Phaser.Keyboard.LEFT
-      @changeDonk(@donks[(@getDonkIndex() + 1) % 4])
-    else if event.keyCode == Phaser.Keyboard.RIGHT
       @changeDonk(@donks[(@getDonkIndex() + 3) % 4])
+    else if event.keyCode == Phaser.Keyboard.RIGHT
+      @changeDonk(@donks[(@getDonkIndex() + 1) % 4])
     else
       super
 

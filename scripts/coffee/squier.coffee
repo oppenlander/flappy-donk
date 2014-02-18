@@ -8,9 +8,9 @@ class Squier extends BaseDonkey
     #TODO: adjust hit box
 
     @gravity = 500
-    @maxVel = -350
-    @addVel = -400
-    @minVel = -200
+    @maxVel = -500
+    @addVel = -600
+    @minVel = -100
     @limitVel = 50
 
 

@@ -7,14 +7,10 @@ class Woodfighter extends BaseDonkey
 
     #TODO: adjust hit box
 
-    @gravity = 500
+    @gravity = 750
     @maxVel = -350
-    @addVel = -400
-    @minVel = -200
+    @addVel = -750
+    @minVel = -250
     @limitVel = 50
-
-  play: (towersPairs) ->
-    super
-    #TODO: adjust the body of fire towers
 
 module.exports = Woodfighter

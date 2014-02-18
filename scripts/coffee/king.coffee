@@ -8,9 +8,8 @@ class King extends BaseDonkey
     #TODO: adjust hit box
 
     @gravity = 500
-    @maxVel = -350
-    @addVel = -400
-    @minVel = -200
-    @limitVel = 50
+    @maxVelocity = -200
+    @jumpVel = @maxVelocity
+    @canJumpVel = @maxVelocity
 
 module.exports = King
