@@ -37,8 +37,57 @@ class Menu extends BaseState
       King
       Woodfighter
     ]
-    #TODO: create donk selection
-    #TODO: add platofrm and animate off it for the game
+    @selectDonkey = new Donkey(@game)
+    @selectDonkey.sprite.anchor.setTo(.5, .5)
+    @selectDonkey.sprite.x = @gw / 8
+    @selectDonkey.sprite.y = @gh * 3 / 4
+    buttonDonkey = @game.add.button(0, 0, 'select_bg', @changeDonkDonkey, @, 0, 1, 2)
+    buttonDonkey.x = @selectDonkey.sprite.x - 32
+    buttonDonkey.y = @selectDonkey.sprite.y - 32
+    @selectDonkey.sprite.bringToTop()
+    textDonkey = @game.add.text(0, 0, 'Donkey', {font: '16px VT323', fill: '#fff'})
+    textDonkey.anchor.setTo(.5, .5)
+    textDonkey.x = @selectDonkey.sprite.x
+    textDonkey.y = buttonDonkey.y + 70
+
+    @selectSquier = new Squier(@game)
+    @selectSquier.sprite.anchor.setTo(.5, .5)
+    @selectSquier.sprite.x = @gw * 3 / 8
+    @selectSquier.sprite.y = @gh * 3 / 4
+    buttonSquier = @game.add.button(0, 0, 'select_bg', @changeDonkSquier, @, 0, 1, 2)
+    buttonSquier.x = @selectSquier.sprite.x - 32
+    buttonSquier.y = @selectSquier.sprite.y - 32
+    @selectSquier.sprite.bringToTop()
+    textSquier = @game.add.text(0, 0, 'Squier', {font: '16px VT323', fill: '#fff'})
+    textSquier.anchor.setTo(.5, .5)
+    textSquier.x = @selectSquier.sprite.x
+    textSquier.y = buttonSquier.y + 70
+
+    @selectKing = new King(@game)
+    @selectKing.sprite.anchor.setTo(.5, .5)
+    @selectKing.sprite.x = @gw * 5 / 8
+    @selectKing.sprite.y = @gh * 3 / 4
+    buttonKing = @game.add.button(0, 0, 'select_bg', @changeDonkKing, @, 0, 1, 2)
+    buttonKing.x = @selectKing.sprite.x - 32
+    buttonKing.y = @selectKing.sprite.y - 32
+    @selectKing.sprite.bringToTop()
+    textKing = @game.add.text(0, 0, 'King', {font: '16px VT323', fill: '#fff'})
+    textKing.anchor.setTo(.5, .5)
+    textKing.x = @selectKing.sprite.x
+    textKing.y = buttonKing.y + 70
+
+    @selectWoodfighter = new Woodfighter(@game)
+    @selectWoodfighter.sprite.anchor.setTo(.5, .5)
+    @selectWoodfighter.sprite.x = @gw * 7 / 8
+    @selectWoodfighter.sprite.y = @gh * 3 / 4
+    buttonWoodfighter = @game.add.button(0, 0, 'select_bg', @changeDonkWoodfighter, @, 0, 1, 2)
+    buttonWoodfighter.x = @selectWoodfighter.sprite.x - 32
+    buttonWoodfighter.y = @selectWoodfighter.sprite.y - 32
+    @selectWoodfighter.sprite.bringToTop()
+    textWoodfighter = @game.add.text(0, 0, 'Woodfighter', {font: '16px VT323', fill: '#fff'})
+    textWoodfighter.anchor.setTo(.5, .5)
+    textWoodfighter.x = @selectWoodfighter.sprite.x
+    textWoodfighter.y = buttonWoodfighter.y + 70
 
   getDonkIndex: () ->
     if @game.donkSelection == Donkey
@@ -52,21 +101,37 @@ class Menu extends BaseState
     else
       0
 
-  selectDonk: (donk) ->
+  changeDonkDonkey: ->
+    @changeDonk(Donkey)
+
+  changeDonkSquier: ->
+    @changeDonk(Squier)
+
+  changeDonkKing: ->
+    @changeDonk(King)
+
+  changeDonkWoodfighter: ->
+    @changeDonk(Woodfighter)
+
+  changeDonk: (donk) ->
     @game.donkSelection = donk
     @player.destroy()
     @player = new donk(@game)
 
   onKeyDown: (event) ->
     if event.keyCode == Phaser.Keyboard.LEFT
-      @selectDonk(@donks[(@getDonkIndex() + 1) % 4])
+      @changeDonk(@donks[(@getDonkIndex() + 1) % 4])
     else if event.keyCode == Phaser.Keyboard.RIGHT
-      @selectDonk(@donks[(@getDonkIndex() + 3) % 4])
+      @changeDonk(@donks[(@getDonkIndex() + 3) % 4])
     else
       super
 
   update: ->
     super
     @player.idle()
+    @selectDonkey.idle()
+    @selectSquier.idle()
+    @selectKing.idle()
+    @selectWoodfighter.idle()
 
 module.exports = Menu

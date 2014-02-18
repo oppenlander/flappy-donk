@@ -30,6 +30,7 @@ class Load extends BaseState
     @game.load.image('explosion', 'assets/images/explosion.png')
     @game.load.spritesheet('mute', 'assets/images/mute.png', 28, 18)
     @game.load.image('bg', 'assets/images/bg.png')
+    @game.load.spritesheet('select_bg', 'assets/images/select_bg.png', 64, 64)
 
     # Load Sounds
     @game.load.audio('braadslee', 'assets/sounds/braadslee.ogg', true)
