@@ -22,6 +22,7 @@ class Play
     # Create Towers
     @towers = @game.add.group()
 
+    # Medium Towers
     topTower0 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_210_top')
     topTower0.towerIdx = 0
     topTower0.body.immovable = true
@@ -34,23 +35,82 @@ class Play
     botTower1 = @towers.create(@game.world.width, @game.world.height-242, 'gerter_tower_210')
     botTower1.body.immovable = true
 
-    topTower2 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_320_top')
+    topTower2 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_210_top')
     topTower2.towerIdx = 2
     topTower2.body.immovable = true
-    botTower2 = @towers.create(@game.world.width, @game.world.height-132, 'gerter_tower_100')
+    botTower2 = @towers.create(@game.world.width, @game.world.height-242, 'gerter_tower_210')
     botTower2.body.immovable = true
 
-    topTower3 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_100_top')
+    # Low Towers
+    topTower3 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_320_top')
     topTower3.towerIdx = 3
     topTower3.body.immovable = true
-    botTower3 = @towers.create(@game.world.width, @game.world.height-352, 'gerter_tower_320')
+    botTower3 = @towers.create(@game.world.width, @game.world.height-132, 'gerter_tower_100')
     botTower3.body.immovable = true
+
+    topTower4 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_320_top')
+    topTower4.towerIdx = 4
+    topTower4.body.immovable = true
+    botTower4 = @towers.create(@game.world.width, @game.world.height-132, 'gerter_tower_100')
+    botTower4.body.immovable = true
+
+    topTower5 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_320_top')
+    topTower5.towerIdx = 5
+    topTower5.body.immovable = true
+    botTower5 = @towers.create(@game.world.width, @game.world.height-132, 'gerter_tower_100')
+    botTower5.body.immovable = true
+
+    # High Towers
+    topTower6 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_100_top')
+    topTower6.towerIdx = 6
+    topTower6.body.immovable = true
+    botTower6 = @towers.create(@game.world.width, @game.world.height-352, 'gerter_tower_320')
+    botTower6.body.immovable = true
+
+    topTower7 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_100_top')
+    topTower7.towerIdx = 7
+    topTower7.body.immovable = true
+    botTower7 = @towers.create(@game.world.width, @game.world.height-352, 'gerter_tower_320')
+    botTower7.body.immovable = true
+
+    topTower8 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_100_top')
+    topTower8.towerIdx = 8
+    topTower8.body.immovable = true
+    botTower8 = @towers.create(@game.world.width, @game.world.height-352, 'gerter_tower_320')
+    botTower8.body.immovable = true
+
+    # Fire Towers
+    topTower9 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_210_top')
+    topTower9.towerIdx = 9
+    topTower9.body.immovable = true
+    botTower9 = @towers.create(@game.world.width, @game.world.height-252, 'gerter_tower_fire_220')
+    botTower9.body.immovable = true
+
+    topTower10 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_320_top')
+    topTower10.towerIdx = 10
+    topTower10.body.immovable = true
+    botTower10 = @towers.create(@game.world.width, @game.world.height-142, 'gerter_tower_fire_110')
+    botTower10.body.immovable = true
+
+    topTower11 = @towers.create(@game.world.width, @gerterSize, 'gerter_tower_100_top')
+    topTower11.towerIdx = 11
+    topTower11.body.immovable = true
+    botTower11 = @towers.create(@game.world.width, @game.world.height-362, 'gerter_tower_fire_330')
+    botTower11.body.immovable = true
 
     @towersPairs = [
       {top: topTower0, bot: botTower0, alive: false, pastPlayer: false}
       {top: topTower1, bot: botTower1, alive: false, pastPlayer: false}
       {top: topTower2, bot: botTower2, alive: false, pastPlayer: false}
       {top: topTower3, bot: botTower3, alive: false, pastPlayer: false}
+      {top: topTower4, bot: botTower4, alive: false, pastPlayer: false}
+      {top: topTower5, bot: botTower5, alive: false, pastPlayer: false}
+      {top: topTower6, bot: botTower6, alive: false, pastPlayer: false}
+      {top: topTower7, bot: botTower7, alive: false, pastPlayer: false}
+      {top: topTower8, bot: botTower8, alive: false, pastPlayer: false}
+      {top: topTower9, bot: botTower9, alive: false, pastPlayer: false}
+      {top: topTower10, bot: botTower10, alive: false, pastPlayer: false}
+      {top: topTower11, bot: botTower11, alive: false, pastPlayer: false}
     ]
 
     # Initialize 3 towers
