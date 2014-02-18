@@ -40,9 +40,15 @@ class Credits extends BaseState
       @game.add.sprite(i*32, @player.y + 40, 'gerter')
     @player.bringToTop()
 
-    @game.input.keyboard.callbackContext = @
-    @game.input.keyboard.onDownCallback = @onKeyDown
-    @game.input.keyboard.onUpCallback = @onKeyUp
+    if not @game.isMobile
+      @game.input.keyboard.callbackContext = @
+      @game.input.keyboard.onDownCallback = @onKeyDown
+      @game.input.keyboard.onUpCallback = @onKeyUp
+    else
+      @game.input.touch.callbackContext = @
+      @game.input.touch.touchStartCallback = @onTouchStart
+      @game.input.touch.touchEndCallback = @onTouchEnd
+      @game.input.touch.start()
 
     @elapsedTime = 0
 
@@ -66,6 +72,11 @@ class Credits extends BaseState
       @toggleSound()
 
   onKeyUp: (event) ->
+
+  onTouchStart: (event) ->
+    @game.state.start('Play')
+
+  onTouchEnd: (event) ->
 
   update: ->
     @elapsedTime += @game.time.elapsed

@@ -36,9 +36,15 @@ class Dead
       @game.add.sprite(i*32, @game.world.height-32, 'gerter')
       @game.add.sprite(i*32, 0, 'gerter')
 
-    @game.input.keyboard.callbackContext = @
-    @game.input.keyboard.onDownCallback = @onKeyDown
-    @game.input.keyboard.onUpCallback = @onKeyUp
+    if not @game.isMobile
+      @game.input.keyboard.callbackContext = @
+      @game.input.keyboard.onDownCallback = @onKeyDown
+      @game.input.keyboard.onUpCallback = @onKeyUp
+    else
+      @game.input.touch.callbackContext = @
+      @game.input.touch.touchStartCallback = @onTouchStart
+      @game.input.touch.touchEndCallback = @onTouchEnd
+      @game.input.touch.start()
 
     @player = @game.add.sprite(@game.world.width/4, @game.world.height/2, 'donkey')
 
@@ -60,6 +66,11 @@ class Dead
       @toggleSound()
 
   onKeyUp: (event) ->
+
+  onTouchStart: (event) ->
+    @game.state.start('Play')
+
+  onTouchEnd: (event) ->
 
   toggleSound: ->
     if @game.soundOn

@@ -77,12 +77,15 @@ class Play
     @player.isDead = false
 
     # Set up user input
-    @game.input.keyboard.callbackContext = @
-    @game.input.keyboard.onDownCallback = @onKeyDown
-    @game.input.keyboard.onUpCallback = @onKeyUp
-    @game.input.touch.callbackContext = @
-    @game.input.touch.touchStartCallback = @onTouchStart
-    @game.input.touch.touchEndCallback = @onTouchEnd
+    if not @game.isMobile
+      @game.input.keyboard.callbackContext = @
+      @game.input.keyboard.onDownCallback = @onKeyDown
+      @game.input.keyboard.onUpCallback = @onKeyUp
+    else
+      @game.input.touch.callbackContext = @
+      @game.input.touch.touchStartCallback = @onTouchStart
+      @game.input.touch.touchEndCallback = @onTouchEnd
+      @game.input.touch.start()
 
   createEdges: ->
     # Create Ceiling/Floor tiels
@@ -93,12 +96,10 @@ class Play
     for i in [0..numEdgeTiles]
       floorTile = @gerters.create(i * @gerterSize, @game.world.height - @gerterSize, 'gerter')
       floorTile.body.immovable = true
-      #floorTile.events.onOutOfBounds.add(@resetGerter, @)
       @gertersArray.push(floorTile)
 
       ceilingTile = @gerters.create(i * @gerterSize, 0, 'gerter')
       ceilingTile.body.immovable = true
-      #ceilingTile.events.onOutOfBounds.add(@resetGerter, @)
       @gertersArray.push(ceilingTile)
 
   createDashboard: ->

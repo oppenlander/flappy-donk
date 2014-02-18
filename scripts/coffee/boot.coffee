@@ -8,6 +8,11 @@ class Boot extends BaseState
     @game.load.image('loading', 'assets/images/loading.png')
 
   create: ->
+    if @game.device.android or @game.device.iOS
+      @game.isMobile = true
+    else
+      @game.isMobile = false
+
     @game.state.start('Load')
 
 module.exports = Boot
