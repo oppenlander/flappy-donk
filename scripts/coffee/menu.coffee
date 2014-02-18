@@ -1,4 +1,6 @@
-BaseState = require './basestate'
+BaseState = require('./basestate')
+Donkey = require('./donkey')
+
 
 class Menu extends BaseState
 
@@ -42,8 +44,8 @@ class Menu extends BaseState
 
     # Create ledge gerters
     for i in [0..(Math.ceil(@game.world.width/(3*32)-1))]
-      @game.add.sprite(i*32, @player.y + 40, 'gerter')
-    @player.bringToTop()
+      @game.add.sprite(i*32, @player.sprite.y + 40, 'gerter')
+    @player.sprite.bringToTop()
 
     if not @game.isMobile
       @game.input.keyboard.callbackContext = @
@@ -59,7 +61,9 @@ class Menu extends BaseState
 
   createDonkSelection: ->
     console.log('Create the Donk selection')
-    @player = @game.add.sprite(@game.world.width/4, @game.world.height/2, 'donkey')
+    if not @game.donkSelection?
+      @game.donkSelection = Donkey
+    @player = new @game.donkSelection(@game)
     #TODO: create donk selection
     #TODO: add platofrm and animate off it for the game
 
@@ -89,11 +93,7 @@ class Menu extends BaseState
   onTouchEnd: (event) ->
 
   update: ->
-    @elapsedTime += @game.time.elapsed
-    if @elapsedTime > 1000
-      # Move frame back and forth
-      @player.frame = ++@player.frame % 2
-      @elapsedTime = 0
+    @player.idle()
 
     if not @game.soundOn
       @game.backgroundMusic.pause()

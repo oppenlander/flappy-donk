@@ -119,10 +119,8 @@ class Play
 
   createPlayer: ->
     # Create Player
-    @player = @game.add.sprite(@game.world.width/4, @game.world.height/2, 'donkey')
-    @player.frame = 0
-    @player.body.gravity.y = 500
-    @player.isDead = false
+    @player = new @game.donkSelection(@game)
+    @player.play()
 
     # Set up user input
     if not @game.isMobile
@@ -160,37 +158,21 @@ class Play
     deadTowers = @towersPairs.filter((tower) -> not tower.alive)
     deadTowers[Math.floor(Math.random() * deadTowers.length)]
 
-  playerJump: ->
-    if not @player.isDead
-      if @player.body.velocity.y > -200
-        # Ensure the player doesn't jump too fast
-        if @player.body.velocity.y < 50
-          @player.body.velocity.y = -350
-        else
-          @player.body.velocity.y -= 400
-        if @game.soundOn
-          @game.add.audio('jump').play('', 0, .05)
-      @player.frame = 1
-
-  endJump: ->
-    if not @player.isDead
-      @player.frame = 0
-
   onTouchStart: (event) ->
-    @playerJump()
+    @player.jumpStart()
 
   onTouchEnd: (event) ->
-    @endJump()
+    @player.jumpEnd()
 
   onKeyUp: (event) ->
     if event.keyCode == Phaser.Keyboard.SPACEBAR
-      @endJump()
+      @player.jumpEnd()
     else if event.keyCode == Phaser.Keyboard.R
       @game.state.start('Play')
 
   onKeyDown: (event) ->
     if event.keyCode == Phaser.Keyboard.SPACEBAR
-      @playerJump()
+      @player.jumpStart()
     else if event.keyCode == Phaser.Keyboard.P
       @toggleSound()
 
@@ -207,28 +189,28 @@ class Play
   update: ->
     if not @player.isDead
       # Collide/collect against other entities
-      @game.physics.collide(@player, @gerters)
-      @game.physics.collide(@player, @towers)
+      @game.physics.collide(@player.sprite, @gerters)
+      @game.physics.collide(@player.sprite, @towers)
 
       # Check if player should die
-      if @player.body.touching.up or
-          @player.body.touching.right or
-          @player.body.touching.down or
-          @player.body.touching.left
+      if @player.sprite.body.touching.up or
+          @player.sprite.body.touching.right or
+          @player.sprite.body.touching.down or
+          @player.sprite.body.touching.left
 
         # Create explosion
-        @explosion = @game.add.sprite(@player.x+@player.body.width/2, @player.y+@player.body.height/2, 'explosion')
+        @explosion = @game.add.sprite(@player.sprite.x+@player.sprite.body.width/2, @player.sprite.y+@player.sprite.body.height/2, 'explosion')
         @explosion.elapsed = 0
         @explosion.anchor.setTo(.5, .5)
         if @game.soundOn
           @game.add.audio('explosion').play('', 0, .1)
 
         # Update player to death
-        @player.body.velocity.x = 0
-        @player.body.velocity.y = 0
+        @player.sprite.body.velocity.x = 0
+        @player.sprite.body.velocity.y = 0
         @player.isDead = true
-        @player.bringToTop()
-        @player.body.gravity.y = 1250
+        @player.sprite.bringToTop()
+        @player.sprite.body.gravity.y = 1250
 
         # Let player overlap these as they fall
         @gerters.setAll 'body.checkCollision.up', false
@@ -273,7 +255,7 @@ class Play
               towerPair.pastPlayer = false
               @needTower = true
             else if not towerPair.pastPlayer and
-                rightSidePos < @player.x
+                rightSidePos < @player.sprite.x
               # Update score if the tower passes the player
               towerPair.pastPlayer = true
               @game.score += 1
@@ -282,9 +264,9 @@ class Play
                 @game.add.audio('passgate').play('', 0, .1)
 
     else # Player is dead
-      @player.body.rotation -= 2
+      @player.sprite.body.rotation -= 2
 
-      if @player.y > @game.world.height
+      if @player.sprite.y > @game.world.height
         if @game.score > @game.highscore
           # Switch to Dead state
           @game.highscore = @game.score

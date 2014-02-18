@@ -46,12 +46,12 @@ class Dead
       @game.input.touch.touchEndCallback = @onTouchEnd
       @game.input.touch.start()
 
-    @player = @game.add.sprite(@game.world.width/4, @game.world.height/2, 'donkey')
+    @player = new @game.donkSelection(@game)
 
     # Create ledge gerters
     for i in [0..(Math.ceil(@game.world.width/(3*32)-1))]
-      @game.add.sprite(i*32, @player.y + 40, 'gerter')
-    @player.bringToTop()
+      @game.add.sprite(i*32, @player.sprite.y + 40, 'gerter')
+    @player.sprite.bringToTop()
 
     @elapsedTime = 0
 
@@ -83,10 +83,6 @@ class Dead
       @game.backgroundMusic.resume()
 
   update: ->
-    @elapsedTime += @game.time.elapsed
-    if @elapsedTime > 1000
-      # Move frame back and forth
-      @player.frame = ++@player.frame % 2
-      @elapsedTime = 0
+    @player.idle()
 
 module.exports = Dead

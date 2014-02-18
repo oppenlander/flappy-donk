@@ -15,7 +15,7 @@ class Credits extends BaseState
       @game.add.sprite(i*32, @game.world.height-32, 'gerter')
       @game.add.sprite(i*32, 0, 'gerter')
 
-    @player = @game.add.sprite(@game.world.width/4, @game.world.height/2, 'donkey')
+    @player = new @game.donkSelection(@game)
 
     creatorLabel = @game.add.text(0, 48, 'Made by: Andrew O.', {font: '48px VT323', fill: '#fff'})
     creatorLabel.x = @game.world.width/2 - creatorLabel._width/2
@@ -37,8 +37,8 @@ class Credits extends BaseState
 
     # Create ledge gerters
     for i in [0..(Math.ceil(@game.world.width/(3*32)-1))]
-      @game.add.sprite(i*32, @player.y + 40, 'gerter')
-    @player.bringToTop()
+      @game.add.sprite(i*32, @player.sprite.y + 40, 'gerter')
+    @player.sprite.bringToTop()
 
     if not @game.isMobile
       @game.input.keyboard.callbackContext = @
@@ -79,10 +79,6 @@ class Credits extends BaseState
   onTouchEnd: (event) ->
 
   update: ->
-    @elapsedTime += @game.time.elapsed
-    if @elapsedTime > 1000
-      # Move frame back and forth
-      @player.frame = ++@player.frame % 2
-      @elapsedTime = 0
+    @player.idle()
 
 module.exports = Credits
