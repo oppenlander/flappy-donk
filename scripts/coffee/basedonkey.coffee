@@ -2,7 +2,13 @@ class BaseDonkey
   constructor: (@game) ->
     @playing = false
 
-    # Class needs: sprite, gravity, maxVel, addVel, minVel, and jumpAudio
+    # Default values
+    @gravity = 500
+    @maxVel = -350
+    @addVel = -400
+    @minVel = -200
+    @limitVel = 50
+    @jumpAudio = @game.add.audio('jump')
 
   play: ->
     @sprite.body.gravity.y = @gravity
