@@ -48,7 +48,7 @@ class BaseDonkey
     @explosion.elapsed = 0
     @explosion.anchor.setTo(.5, .5)
     if @game.soundOn
-      explosionAudio.play('', 0, .1)
+      @explosionAudio.play('', 0, .1)
 
     # Kill
     @sprite.body.velocity.x = 0
