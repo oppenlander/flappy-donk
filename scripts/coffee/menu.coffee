@@ -1,5 +1,8 @@
 BaseState = require('./basestate')
 Donkey = require('./donkey')
+Squier = require('./squier')
+King = require('./king')
+Woodfighter = require('./woodfighter')
 
 
 class Menu extends BaseState
@@ -28,8 +31,39 @@ class Menu extends BaseState
 
   createDonkSelection: ->
     console.log('Donk selection!')
+    @donks = [
+      Donkey
+      Squier
+      King
+      Woodfighter
+    ]
     #TODO: create donk selection
     #TODO: add platofrm and animate off it for the game
+
+  getDonkIndex: () ->
+    if @game.donkSelection == Donkey
+      0
+    else if @game.donkSelection == Squier
+      1
+    else if @game.donkSelection == King
+      2
+    else if @game.donkSelection == Woodfighter
+      3
+    else
+      0
+
+  selectDonk: (donk) ->
+    @game.donkSelection = donk
+    @player.destroy()
+    @player = new donk(@game)
+
+  onKeyDown: (event) ->
+    if event.keyCode == Phaser.Keyboard.LEFT
+      @selectDonk(@donks[(@getDonkIndex() + 1) % 4])
+    else if event.keyCode == Phaser.Keyboard.RIGHT
+      @selectDonk(@donks[(@getDonkIndex() + 3) % 4])
+    else
+      super
 
   update: ->
     super

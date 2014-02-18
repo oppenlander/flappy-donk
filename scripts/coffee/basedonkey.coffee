@@ -57,6 +57,9 @@ class BaseDonkey
     @sprite.bringToTop()
     @sprite.body.gravity.y = 1250
 
+  destroy: ->
+    @sprite.destroy()
+
   update: ->
     if @isDead
       # Play death animation
