@@ -5,7 +5,7 @@ Play = require('./play')
 Dead = require('./dead')
 Credits = require('./credits')
 
-game = new Phaser.Game(400, 600, Phaser.AUTO, '')
+game = new Phaser.Game(400, 600, Phaser.AUTO, 'game-container')
 
 game.state.add('Boot', Boot)
 game.state.add('Load', Load)
