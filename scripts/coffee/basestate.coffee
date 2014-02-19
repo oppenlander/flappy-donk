@@ -26,6 +26,12 @@ class BaseState
       @game.input.keyboard.callbackContext = @
       @game.input.keyboard.onDownCallback = @onKeyDown
       @game.input.keyboard.onUpCallback = @onKeyUp
+      @game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR)
+      @game.input.keyboard.addKeyCapture(Phaser.Keyboard.C)
+      @game.input.keyboard.addKeyCapture(Phaser.Keyboard.M)
+      @game.input.keyboard.addKeyCapture(Phaser.Keyboard.P)
+      @game.input.keyboard.addKeyCapture(Phaser.Keyboard.LEFT)
+      @game.input.keyboard.addKeyCapture(Phaser.Keyboard.Right)
     else
       @game.input.touch.callbackContext = @
       @game.input.touch.touchStartCallback = @onTouchStart

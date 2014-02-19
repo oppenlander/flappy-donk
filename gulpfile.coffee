@@ -1,5 +1,6 @@
 gulp = require 'gulp'
 gutil = require 'gulp-util'
+gulpif = require 'gulp-if'
 
 coffee = require 'gulp-coffee'
 browserify = require 'gulp-browserify'
@@ -8,6 +9,8 @@ uglify = require 'gulp-uglify'
 sass = require 'gulp-sass'
 refresh = require 'gulp-livereload'
 imagemin = require 'gulp-imagemin'
+zip = require 'gulp-zip'
+clean = require 'gulp-clean'
 
 connect = require 'connect'
 http = require 'http'
@@ -18,8 +21,8 @@ server = lr()
 gulp.task 'webserver', ->
   port = 3000
   hostname = null
-  base = path.resolve '.'
-  directory = path.resolve '.'
+  base = path.resolve 'dist/site'
+  directory = path.resolve 'dist/site'
 
   app = connect()
     .use(connect.static base)
@@ -32,43 +35,65 @@ gulp.task 'livereload', ->
     server.listen 35729, (err) ->
         console.log err if err?
 
-gulp.task 'scripts', ->
+gulp.task 'vendor', ->
   gulp.src('scripts/vendor/*.js')
-    .pipe(concat 'vendor.js')
-    .pipe(gulp.dest 'assets/')
-    .pipe(refresh server)
+      .pipe(concat 'vendor.js')
+      .pipe(gulpif gutil.env.production, uglify())
+      .pipe(gulp.dest 'dist/site/assets/')
+      .pipe(refresh server)
 
+gulp.task 'scripts', ->
   gulp.src('scripts/coffee/game.coffee', { read: false })
-    .pipe(browserify(transform: ['coffeeify'], extensions: ['.coffee']))
-    .pipe(concat 'scripts.js')
-    .pipe(gulp.dest 'assets/')
-    .pipe(refresh server)
+      .pipe(browserify({
+        transform: ['coffeeify']
+        extensions: ['.coffee']
+        debug: !gutil.env.production
+        }))
+      .pipe(concat 'scripts.js')
+      .pipe(gulpif gutil.env.production, uglify())
+      .pipe(gulp.dest 'dist/site/assets/')
+      .pipe(refresh server)
 
 gulp.task 'styles', ->
-    gulp.src('styles/scss/init.scss')
-        .pipe(sass includePaths: ['styles/scss/includes'])
-        .pipe(concat 'styles.css')
-        .pipe(gulp.dest 'assets/')
-        .pipe(refresh server)
+  gulp.src('styles/scss/init.scss')
+      .pipe(sass includePaths: ['styles/scss/includes'])
+      .pipe(concat 'styles.css')
+      .pipe(gulp.dest 'dist/site/assets/')
+      .pipe(refresh server)
 
 gulp.task 'html', ->
   gulp.src('*.html')
-    .pipe(refresh server)
+      .pipe(gulp.dest 'dist/site/')
+      .pipe(refresh server)
 
 gulp.task 'images', ->
-    gulp.src('resources/images/**')
-        .pipe(imagemin())
-        .pipe(gulp.dest('assets/images/'))
+  gulp.src('resources/images/**')
+      .pipe(gulp.dest 'dist/site/assets/images/')
+      .pipe(imagemin())
+      .pipe(refresh server)
 
 gulp.task 'sounds', ->
   gulp.src('resources/sounds/**')
-    .pipe(gulp.dest('assets/sounds/'))
+      .pipe(gulp.dest('dist/site/assets/sounds/'))
+      .pipe(refresh server)
+
+gulp.task 'clean', ->
+  gulp.src('dist', read: false)
+      .pipe(clean())
 
 gulp.task 'watch', ->
+  gulp.watch 'scripts/vendor/**', ['vendor']
   gulp.watch 'scripts/coffee/**', ['scripts']
   gulp.watch 'styles/scss/**', ['styles']
+  gulp.watch '*.html', ['html']
   gulp.watch 'resources/images/**', ['images']
   gulp.watch 'resources/sounds/**', ['sounds']
-  gulp.watch '*.html', ['html']
 
-gulp.task 'default', ['webserver', 'livereload', 'scripts', 'styles', 'images', 'sounds', 'watch']
+gulp.task 'build', ['scripts', 'styles', 'images', 'sounds', 'vendor', 'html']
+
+gulp.task 'package', ['build'], ->
+  gulp.src('dist/site/**')
+      .pipe(zip 'archive.zip')
+      .pipe(gulp.dest 'dist/')
+
+gulp.task 'default', ['webserver', 'livereload', 'watch', 'build']
