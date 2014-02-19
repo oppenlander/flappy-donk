@@ -17,6 +17,11 @@ class Load extends BaseState
     @game.load.spritesheet('donkey_squier', 'assets/images/donkey_squier.png', 48, 41)
     @game.load.spritesheet('donkey_king', 'assets/images/donkey_king.png', 48, 41)
     @game.load.spritesheet('donkey_woodfighter', 'assets/images/donkey_woodfighter.png', 48, 41)
+    @game.load.spritesheet('babydonkey', 'assets/images/babydonkey.png', 24, 20)
+    @game.load.spritesheet('babydonkey_squier', 'assets/images/babydonkey_squier.png', 24, 20)
+    @game.load.spritesheet('babydonkey_king', 'assets/images/babydonkey_king.png', 24, 20)
+    @game.load.spritesheet('babydonkey_woodfighter', 'assets/images/babydonkey_woodfighter.png', 24, 20)
+
     @game.load.image('gerter', 'assets/images/gerter.png')
     @game.load.image('gerter_tower_100', 'assets/images/gerter_tower_100.png')
     @game.load.image('gerter_tower_210', 'assets/images/gerter_tower_210.png')
@@ -36,7 +41,12 @@ class Load extends BaseState
     @game.load.audio('braadslee', 'assets/sounds/braadslee.ogg', true)
     @game.load.audio('explosion', 'assets/sounds/explosion.ogg', true)
     @game.load.audio('passgate', 'assets/sounds/passgate.ogg', true)
-    @game.load.audio('jump', 'assets/sounds/jump.ogg', true)
+
+    @game.load.audio('babysong', 'assets/sounds/babysong.ogg', true)
+    @game.load.audio('jump', 'assets/sounds/babyjump.ogg', true)
+    @game.load.audio('babyexplosion', 'assets/sounds/babyexplosion.ogg', true)
+    @game.load.audio('babypassgate', 'assets/sounds/babypassgate.ogg', true)
+    @game.load.audio('babyjump', 'assets/sounds/babyjump.ogg', true)
 
   create: ->
     @game.state.start('Menu')

@@ -7,13 +7,24 @@ class BaseState
     @gh = @game.world.height
     @gerterSize = 32
 
+    if not @game.babyMode?
+      @game.babyMode = false
+
     # Init background image
     @game.add.sprite(0, 0, 'bg')
 
     # Init background music
     if not @game.backgroundMusic?
-      @game.backgroundMusic = @game.add.audio('braadslee')
+      musicName = if not @game.babyMode then 'braadslee' else 'babysong'
+      @game.backgroundMusic = @game.add.audio(musicName)
       @game.backgroundMusic.play('', 0, 1, true)
+      if not @game.soundOn?
+        @game.soundOn
+      if not @game.soundOn
+        @game.backgroundMusic.pause()
+
+    # Init sound on
+    if not @game.soundOn?
       @game.soundOn = true
 
     # Init sound control
@@ -58,9 +69,16 @@ class BaseState
     @player = new @game.donkSelection(@game)
 
     # Create ledge gerters
+    donkOffset = if @game.babyMode then 20 else 40
     for i in [0..(Math.ceil(@game.world.width/(3*32)-1))]
-      @game.add.sprite(i*32, @player.sprite.y + 40, 'gerter')
+      @game.add.sprite(i*32, @player.sprite.y + donkOffset, 'gerter')
     @player.sprite.bringToTop()
+
+  toggleBabymode: ->
+    @game.babyMode = if @game.babyMode then false else true
+    @game.backgroundMusic.stop()
+    @game.backgroundMusic = null
+    @game.state.start('Menu')
 
   toggleSound: ->
     if @game.soundOn
@@ -81,6 +99,8 @@ class BaseState
       @game.state.start('Credits')
     else if event.keyCode == Phaser.Keyboard.P
       @toggleSound()
+    else if event.keyCode == Phaser.Keyboard.B
+      @toggleBabymode()
 
   onKeyUp: (event) ->
 

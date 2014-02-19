@@ -11,8 +11,11 @@ class BaseDonkey
     @jumpVel = -400
     @canJumpVel = -200
 
-    @jumpAudio = @game.add.audio('jump')
-    @explosionAudio = @game.add.audio('explosion')
+    jumpName = if not @game.babyMode then 'jump' else 'babyjump'
+    @jumpAudio = @game.add.audio(jumpName)
+
+    explosionName = if not @game.babyMode then 'explosion' else 'babyexplosion'
+    @explosionAudio = @game.add.audio(explosionName)
 
   play: (state) ->
     @sprite.body.gravity.y = @gravity
@@ -27,7 +30,7 @@ class BaseDonkey
           @sprite.body.velocity.y = @maxVelocity
 
         if @game.soundOn
-          @jumpAudio.play('', 0, .05)
+          @jumpAudio.play('', 0, .1)
       @sprite.frame = 1
 
   jumpEnd: ->

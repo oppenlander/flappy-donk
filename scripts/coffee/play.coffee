@@ -31,68 +31,79 @@ class Play extends BaseState
     # Create Towers
     @towers = @game.add.group()
 
+    if not @game.babyMode
+      mdOffset = @gh - 242
+      hiOffset = @gh - 352
+      loOffset = @gh - 132
+      topOffset = @gerterSize
+    else
+      mdOffset = @gh - 192
+      hiOffset = @gh - 302
+      loOffset = @gh - 82
+      topOffset = @gerterSize - 50
+
     # Medium Towers
-    topTower0 = @towers.create(@gw, @gerterSize, 'gerter_tower_210_top')
+    topTower0 = @towers.create(@gw, topOffset, 'gerter_tower_210_top')
     topTower0.body.immovable = true
-    botTower0 = @towers.create(@gw, @gh-242, 'gerter_tower_210')
+    botTower0 = @towers.create(@gw, mdOffset, 'gerter_tower_210')
     botTower0.body.immovable = true
 
-    topTower1 = @towers.create(@gw, @gerterSize, 'gerter_tower_210_top')
+    topTower1 = @towers.create(@gw, topOffset, 'gerter_tower_210_top')
     topTower1.body.immovable = true
-    botTower1 = @towers.create(@gw, @gh-242, 'gerter_tower_210')
+    botTower1 = @towers.create(@gw, mdOffset, 'gerter_tower_210')
     botTower1.body.immovable = true
 
-    topTower2 = @towers.create(@gw, @gerterSize, 'gerter_tower_210_top')
+    topTower2 = @towers.create(@gw, topOffset, 'gerter_tower_210_top')
     topTower2.body.immovable = true
-    botTower2 = @towers.create(@gw, @gh-242, 'gerter_tower_210')
+    botTower2 = @towers.create(@gw, mdOffset, 'gerter_tower_210')
     botTower2.body.immovable = true
 
     # Low Towers
-    topTower3 = @towers.create(@gw, @gerterSize, 'gerter_tower_320_top')
+    topTower3 = @towers.create(@gw, topOffset, 'gerter_tower_320_top')
     topTower3.body.immovable = true
-    botTower3 = @towers.create(@gw, @gh-132, 'gerter_tower_100')
+    botTower3 = @towers.create(@gw, loOffset, 'gerter_tower_100')
     botTower3.body.immovable = true
 
-    topTower4 = @towers.create(@gw, @gerterSize, 'gerter_tower_320_top')
+    topTower4 = @towers.create(@gw, topOffset, 'gerter_tower_320_top')
     topTower4.body.immovable = true
-    botTower4 = @towers.create(@gw, @gh-132, 'gerter_tower_100')
+    botTower4 = @towers.create(@gw, loOffset, 'gerter_tower_100')
     botTower4.body.immovable = true
 
-    topTower5 = @towers.create(@gw, @gerterSize, 'gerter_tower_320_top')
+    topTower5 = @towers.create(@gw, topOffset, 'gerter_tower_320_top')
     topTower5.body.immovable = true
-    botTower5 = @towers.create(@gw, @gh-132, 'gerter_tower_100')
+    botTower5 = @towers.create(@gw, loOffset, 'gerter_tower_100')
     botTower5.body.immovable = true
 
     # High Towers
-    topTower6 = @towers.create(@gw, @gerterSize, 'gerter_tower_100_top')
+    topTower6 = @towers.create(@gw, topOffset, 'gerter_tower_100_top')
     topTower6.body.immovable = true
-    botTower6 = @towers.create(@gw, @gh-352, 'gerter_tower_320')
+    botTower6 = @towers.create(@gw, hiOffset, 'gerter_tower_320')
     botTower6.body.immovable = true
 
-    topTower7 = @towers.create(@gw, @gerterSize, 'gerter_tower_100_top')
+    topTower7 = @towers.create(@gw, topOffset, 'gerter_tower_100_top')
     topTower7.body.immovable = true
-    botTower7 = @towers.create(@gw, @gh-352, 'gerter_tower_320')
+    botTower7 = @towers.create(@gw, hiOffset, 'gerter_tower_320')
     botTower7.body.immovable = true
 
-    topTower8 = @towers.create(@gw, @gerterSize, 'gerter_tower_100_top')
+    topTower8 = @towers.create(@gw, topOffset, 'gerter_tower_100_top')
     topTower8.body.immovable = true
-    botTower8 = @towers.create(@gw, @gh-352, 'gerter_tower_320')
+    botTower8 = @towers.create(@gw, hiOffset, 'gerter_tower_320')
     botTower8.body.immovable = true
 
     # Fire Towers
-    topTower9 = @towers.create(@gw, @gerterSize, 'gerter_tower_210_top')
+    topTower9 = @towers.create(@gw, topOffset, 'gerter_tower_210_top')
     topTower9.body.immovable = true
-    botTower9 = @towers.create(@gw, @gh-252, 'gerter_tower_fire_220')
+    botTower9 = @towers.create(@gw, mdOffset-10, 'gerter_tower_fire_220')
     botTower9.body.immovable = true
 
-    topTower10 = @towers.create(@gw, @gerterSize, 'gerter_tower_320_top')
+    topTower10 = @towers.create(@gw, topOffset, 'gerter_tower_320_top')
     topTower10.body.immovable = true
-    botTower10 = @towers.create(@gw, @gh-142, 'gerter_tower_fire_110')
+    botTower10 = @towers.create(@gw, loOffset-10, 'gerter_tower_fire_110')
     botTower10.body.immovable = true
 
-    topTower11 = @towers.create(@gw, @gerterSize, 'gerter_tower_100_top')
+    topTower11 = @towers.create(@gw, topOffset, 'gerter_tower_100_top')
     topTower11.body.immovable = true
-    botTower11 = @towers.create(@gw, @gh-362, 'gerter_tower_fire_330')
+    botTower11 = @towers.create(@gw, hiOffset-10, 'gerter_tower_fire_330')
     botTower11.body.immovable = true
 
     @towersPairs = [
@@ -217,7 +228,10 @@ class Play extends BaseState
               @game.score += 1
               @scoreboard.setText(''+@game.score)
               if @game.soundOn
-                @game.add.audio('passgate').play('', 0, .1)
+                if not @game.babyMode
+                  @game.add.audio('passgate').play('', 0, .1)
+                else
+                  @game.add.audio('babypassgate').play('', 0, .2)
 
     # Update player
     @player.update()
