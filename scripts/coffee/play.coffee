@@ -143,8 +143,10 @@ class Play extends BaseState
 
   onTouchStart: (event) ->
     @player.jumpStart()
+    @player.canJump = false
 
   onTouchEnd: (event) ->
+    @player.canJump = true
     @player.jumpEnd()
 
   onKeyUp: (event) ->

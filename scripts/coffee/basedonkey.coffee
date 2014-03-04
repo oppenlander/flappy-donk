@@ -17,12 +17,17 @@ class BaseDonkey
     explosionName = if not @game.babyMode then 'explosion' else 'babyexplosion'
     @explosionAudio = @game.add.audio(explosionName)
 
+    @canJump = not @game.isMobile
+
   play: (state) ->
     @sprite.body.gravity.y = @gravity
     @playing = true
     @isDead = false
 
   jumpStart: ->
+    if not @canJump
+      # Surpress extra onTouchStarts causing extra jumps
+      return
     if @playing and not @isDead
       if @sprite.body.velocity.y > @canJumpVel
         @sprite.body.velocity.y += @jumpVel
