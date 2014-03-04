@@ -13,6 +13,22 @@ class BaseState
     # Init background image
     @game.add.sprite(0, 0, 'bg')
 
+    # Init edges
+    @gertersBody = @game.add.group()
+    @gertersBody.create(0, 0, 'gerterbody')
+    @gertersBody.create(0, @gh - @gerterSize, 'gerterbody')
+
+    @gerters = @game.add.group()
+    topGerters = @game.add.tileSprite(0, 0, @gw, @gerterSize, 'gerter')
+    topGerters.body.width = @gw
+    topGerters.body.immovable = true
+    @gerters.add(topGerters)
+
+    botGerters = @game.add.tileSprite(0, @gh - @gerterSize, @gw, @gerterSize, 'gerter')
+    botGerters.body.width = @gw
+    botGerters.body.immovable = true
+    @gerters.add(botGerters)
+
     # Init background music
     if not @game.backgroundMusic?
       musicName = if not @game.babyMode then 'braadslee' else 'babysong'
@@ -48,19 +64,6 @@ class BaseState
       @game.input.touch.touchStartCallback = @onTouchStart
       @game.input.touch.touchEndCallback = @onTouchEnd
       @game.input.touch.start()
-
-    # Init Ceiling/Floor tiles
-    @gerters = @game.add.group()
-    numEdgeTiles = Math.ceil(@gw / @gerterSize)
-    @gertersArray = []
-    for i in [0..numEdgeTiles]
-      floorTile = @gerters.create(i * @gerterSize, @gh - @gerterSize, 'gerter')
-      floorTile.body.immovable = true
-      @gertersArray.push(floorTile)
-
-      ceilingTile = @gerters.create(i * @gerterSize, 0, 'gerter')
-      ceilingTile.body.immovable = true
-      @gertersArray.push(ceilingTile)
 
   createIdle: ->
     # Create Donk
@@ -112,5 +115,10 @@ class BaseState
   update: ->
     if not @game.soundOn
       @game.backgroundMusic.pause()
+
+    @gerters.forEach((gerter) ->
+        if @player and not @player.isDead
+          gerter.tilePosition.x -= @player.speed * @game.time.physicsElapsed
+      , @)
 
 module.exports = BaseState

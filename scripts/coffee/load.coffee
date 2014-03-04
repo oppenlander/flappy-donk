@@ -23,6 +23,7 @@ class Load extends BaseState
     @game.load.spritesheet('babydonkey_woodfighter', 'assets/images/babydonkey_woodfighter.png', 24, 20)
 
     @game.load.image('gerter', 'assets/images/gerter.png')
+    @game.load.image('gerterbody', 'assets/images/gerterbody.png')
     @game.load.image('gerter_tower_100', 'assets/images/gerter_tower_100.png')
     @game.load.image('gerter_tower_210', 'assets/images/gerter_tower_210.png')
     @game.load.image('gerter_tower_320', 'assets/images/gerter_tower_320.png')

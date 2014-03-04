@@ -3,8 +3,8 @@ BaseDonkey = require('./basedonkey')
 class Squier extends BaseDonkey
   constructor: (@game) ->
     super
-    spriteName = if not @game.babyMode then 'donkey_squier' else 'babydonkey_squier'
-    @sprite = @game.add.sprite(@game.world.width/4, @game.world.height/2, spriteName)
+    @spriteName = if not @game.babyMode then 'donkey_squier' else 'babydonkey_squier'
+    @sprite = @game.add.sprite(@game.world.width/4, @game.world.height/2, @spriteName)
 
     @label = if not @game.babyMode then 'Squire' else 'Baby Squire'
 

@@ -27,6 +27,8 @@ class Play extends BaseState
     @scoreboard = @game.add.text(10, @gerterSize, ''+@game.score, {font: '48px VT323', fill: '#fff'})
     @soundToggle.bringToTop()
 
+    @initStartTowers()
+
   createTowers: ->
     # Create Towers
     @towers = @game.add.group()
@@ -121,19 +123,26 @@ class Play extends BaseState
       {top: topTower11, bot: botTower11, alive: false, pastPlayer: false}
     ]
 
+  initStartTowers: ->
     # Initialize 3 towers
     t1 = @getRandomDeadTowersPair()
     t1.alive = true
+    t1.top.body.velocity.x = -@player.speed
+    t1.bot.body.velocity.x = -@player.speed
 
     t2 = @getRandomDeadTowersPair()
     t2.alive = true
     t2.top.x += 250
     t2.bot.x += 250
+    t2.top.body.velocity.x = -@player.speed
+    t2.bot.body.velocity.x = -@player.speed
 
     t3 = @getRandomDeadTowersPair()
     t3.alive = true
     t3.top.x += 500
     t3.bot.x += 500
+    t3.top.body.velocity.x = -@player.speed
+    t3.bot.body.velocity.x = -@player.speed
 
     @needTower = false
 
@@ -169,7 +178,7 @@ class Play extends BaseState
     super
     if not @player.isDead
       # Collide/collect against other entities
-      @game.physics.collide(@player.sprite, @gerters)
+      @game.physics.collide(@player.sprite, @gertersBody)
       @game.physics.collide(@player.sprite, @towers)
 
       # Check if player should die
@@ -187,11 +196,17 @@ class Play extends BaseState
         @gerters.setAll 'body.checkCollision.down', false
         @gerters.setAll 'body.checkCollision.left', false
         @gerters.setAll 'body.checkCollision.any', false
+        @gertersBody.setAll 'body.checkCollision.up', false
+        @gertersBody.setAll 'body.checkCollision.right', false
+        @gertersBody.setAll 'body.checkCollision.down', false
+        @gertersBody.setAll 'body.checkCollision.left', false
+        @gertersBody.setAll 'body.checkCollision.any', false
         @towers.setAll 'body.checkCollision.up', false
         @towers.setAll 'body.checkCollision.right', false
         @towers.setAll 'body.checkCollision.down', false
         @towers.setAll 'body.checkCollision.left', false
         @towers.setAll 'body.checkCollision.any', false
+        @towers.setAll 'body.velocity.x', 0
 
       else
         # Check if a new tower needs generated
@@ -201,20 +216,13 @@ class Play extends BaseState
           pair.alive = true
           pair.top.x += 300
           pair.bot.x += 300
-
-        # Update Gerter position
-        for i in [0..@gertersArray.length-1]
-          gerter = @gertersArray[i]
-          if gerter.x + gerter.width < 0
-            gerter.reset(@gerterMovePoint, gerter.y)
-          gerter.x -= @speed
+          pair.top.body.velocity.x = -@player.speed
+          pair.bot.body.velocity.x = -@player.speed
 
         # Update Tower position
         for i in [0..@towersPairs.length-1]
           towerPair = @towersPairs[i]
           if towerPair.alive
-            towerPair.top.x -= @speed
-            towerPair.bot.x -= @speed
             rightSidePos = towerPair.top.x + towerPair.top.width
             if rightSidePos < 0
               # Reset tower if its past the screen
@@ -222,6 +230,8 @@ class Play extends BaseState
               towerPair.bot.reset(@gw+20, towerPair.bot.y)
               towerPair.alive = false
               towerPair.pastPlayer = false
+              towerPair.top.body.velocity.x = 0
+              towerPair.bot.body.velocity.x = 0
               @needTower = true
             else if not towerPair.pastPlayer and
                 rightSidePos < @player.sprite.x

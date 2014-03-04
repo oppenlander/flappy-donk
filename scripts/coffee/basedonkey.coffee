@@ -6,10 +6,11 @@ class BaseDonkey
 
     # Default values
     @gravity = 500
-    @gravity = 500
+    @speed = 100
     @maxVelocity = -350
     @jumpVel = -400
     @canJumpVel = -200
+    @spriteName = 'donkey'
 
     jumpName = if not @game.babyMode then 'jump' else 'babyjump'
     @jumpAudio = @game.add.audio(jumpName)
