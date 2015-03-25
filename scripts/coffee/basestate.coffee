@@ -114,7 +114,11 @@ class BaseState
 
   update: ->
     if not @game.soundOn
-      @game.backgroundMusic.pause()
+      if @game.backgroundMusic.isPlaying
+        @game.backgroundMusic.pause()
+    else
+      if not @game.backgroundMusic.isPlaying
+        @game.backgroundMusic.resume()
 
     @gerters.forEach((gerter) ->
         if @player and not @player.isDead
